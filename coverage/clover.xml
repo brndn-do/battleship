@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1750449988642" clover="3.2.0">
+  <project timestamp="1750449988642" name="All files">
+    <metrics statements="6" coveredstatements="6" conditionals="6" coveredconditionals="6" methods="3" coveredmethods="3" elements="15" coveredelements="15" complexity="0" loc="6" ncloc="6" packages="1" files="1" classes="1"/>
+    <file name="ship.js" path="/home/brndn-do/battleship/src/ship.js">
+      <metrics statements="6" coveredstatements="6" conditionals="6" coveredconditionals="6" methods="3" coveredmethods="3"/>
+      <line num="6" count="11" type="cond" truecount="4" falsecount="0"/>
+      <line num="7" count="5" type="stmt"/>
+      <line num="9" count="6" type="stmt"/>
+      <line num="10" count="6" type="stmt"/>
+      <line num="14" count="9" type="cond" truecount="2" falsecount="0"/>
+      <line num="18" count="15" type="stmt"/>
+    </file>
+  </project>
+</coverage>
