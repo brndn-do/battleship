@@ -1,6 +1,7 @@
 import Gameboard from "../src/gameboard.js";
 import Ship from "../src/ship.js";
-jest.mock('../src/ship.js');
+
+const hitSpy = jest.spyOn(Ship.prototype, "hit");
 
 describe("gameboard tests", () => {
   let g;
@@ -98,9 +99,11 @@ describe("gameboard tests", () => {
 
   describe("receiveAttack() function tests", () => {
     beforeEach(() => {
-      Ship.mockClear();
       g.place(0, 0, 5);
     });
+    afterEach(() => {
+      Ship.prototype.hit.mockClear();
+    })
     test("missed attack returns false", () => {
       expect(g.receiveAttack(1, 0)).toBe(false);
     });
@@ -140,10 +143,24 @@ describe("gameboard tests", () => {
     test("calls hit() function to correct ship when an attack lands", () => {
       g.place(1, 0, 2); // extra ship
       expect(g.receiveAttack(0, 0)).toBe(true);
-      const [shipA, shipB] = Ship.mock.instances;
-      console.log(shipA, shipB);
-      expect(shipA.hit).toHaveBeenCalledTimes(1);
-      expect(shipB.hit).toHaveBeenCalledTimes(0);
+      expect(hitSpy.mock.instances[0]).toBe(g.grid[0][0].ship);
+      expect(hitSpy.mock.instances).not.toContain(g.grid[1][0].ship);
+    });
+  });
+
+  describe("report() function test", () => {
+    test("correctly reports whether all ships have sunk", () => {
+      g.place(0, 0, 2);
+      g.place(1, 0, 2);
+      expect(g.report()).toBe(false);
+      g.receiveAttack(0, 0);
+      expect(g.report()).toBe(false);
+      g.receiveAttack(0, 1);
+      expect(g.report()).toBe(false);
+      g.receiveAttack(1, 1);
+      expect(g.report()).toBe(false);
+      g.receiveAttack(1, 0);
+      expect(g.report()).toBe(true);
     });
   });
 });
