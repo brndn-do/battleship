@@ -6,14 +6,14 @@ class Gameboard {
     }
   }
 
-  place(x, y, length, vertical = false) {
+  place(r, c, length, vertical = false) {
     // validate arguments
     if (
-      !Number.isInteger(x) ||
-      !Number.isInteger(y) ||
+      !Number.isInteger(r) ||
+      !Number.isInteger(c) ||
       !Number.isInteger(length)
     )
-      throw new Error("x, y, length must be a positive integer");
+      throw new Error("r, c, length must be a positive integer");
     if (typeof vertical !== "boolean")
       throw new Error("vertical must be a boolean");
     if (length < 2 || length > 5)
@@ -23,21 +23,13 @@ class Gameboard {
     //
 
     // check if it will be out of bounds
-    if ((vertical ? y : x) + length >= 9) {
+    if ((vertical ? r : c) + length >= 9) {
       throw new Error("ship cannot be placed out of bounds!");
     }
 
-    if (vertical) {
-      // vertical placement
-      for (let i = x; i < x + length; i++) {
-        this.grid[i][y] = 0;
-      }
-    } else {
-      // horizontal placement
-      for (let i = y; i < y + length; i++) {
-        this.grid[x][i] = 0;
-      }
-    }
+
+
+
   }
 }
 
