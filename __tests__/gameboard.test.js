@@ -83,6 +83,9 @@ describe("gameboard tests", () => {
     test("missed attack returns false", () => {
       expect(g.receiveAttack(1, 0)).toBe(false);
     })
+    test("successful attack returns true", () => {
+      expect(g.receiveAttack(0 ,0)).toBe(true);
+    })
     test("throws if out of bounds", () => {
       expect(() => g.receiveAttack(10, 1)).toThrow("out of bounds");
       expect(() => g.receiveAttack(0, 10)).toThrow("out of bounds");
