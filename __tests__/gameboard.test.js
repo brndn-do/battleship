@@ -6,14 +6,17 @@ describe("gameboard tests", () => {
     g = new Gameboard();
   });
 
-  test("initializes a 10x10 grid of null elements", () => {
+  test("initializes a 10x10 grid of cells containing .ship and .attacked", () => {
     expect(g.grid.length).toBe(10);
     for (const r of g.grid) {
       expect(r.length).toBe(10);
     }
     for (const r of g.grid) {
       for (const c of r) {
-        expect(c).toBeNull();
+        expect(c).toEqual({
+          ship: null,
+          attacked: false,
+        });
       }
     }
   });
@@ -22,6 +25,7 @@ describe("gameboard tests", () => {
     test("places a ship of length 2 at 0, 0 horizontally", () => {
       // horizontal (row stays same)
       g.place(0, 0, 2);
+      console.log(g.grid);
       expect(g.grid[0][0].ship).not.toBeNull();
       expect(g.grid[0][1].ship).not.toBeNull();
       expect(g.grid[0][2].ship).toBeNull();
