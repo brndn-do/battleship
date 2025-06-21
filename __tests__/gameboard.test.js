@@ -22,17 +22,17 @@ describe("gameboard tests", () => {
     test("places a ship of length 2 at 0, 0 horizontally", () => {
       // horizontal (row stays same)
       g.place(0, 0, 2);
-      expect(g.grid[0][0]).not.toBeNull();
-      expect(g.grid[0][1]).not.toBeNull();
-      expect(g.grid[0][2]).toBeNull();
+      expect(g.grid[0][0].ship).not.toBeNull();
+      expect(g.grid[0][1].ship).not.toBeNull();
+      expect(g.grid[0][2].ship).toBeNull();
     });
 
     test("places a ship of length 2 at 0, 0 vertically", () => {
       // vertical (col stays same)
       g.place(0, 0, 2, true);
-      expect(g.grid[0][0]).not.toBeNull();
-      expect(g.grid[1][0]).not.toBeNull();
-      expect(g.grid[2][0]).toBeNull();
+      expect(g.grid[0][0].ship).not.toBeNull();
+      expect(g.grid[1][0].ship).not.toBeNull();
+      expect(g.grid[2][0].ship).toBeNull();
     });
 
     test("doesn't place a ship of length < 2 or > 5", () => {
@@ -49,7 +49,7 @@ describe("gameboard tests", () => {
     test("doesn't place a ship if it would overlap", () => {
       g.place(0, 5, 5);
       for (let i = 5; i < 10; i++)
-        expect(g.grid[0][i]).not.toBeNull();
+        expect(g.grid[0][i].ship).not.toBeNull();
       expect(() => g.place(0, 4, 2)).toThrow("overlap");
       g.place(5, 5, 3, true);
       expect(() => g.place(6, 3, 3)).toThrow("overlap");
@@ -85,6 +85,14 @@ describe("gameboard tests", () => {
     })
     test("successful attack returns true", () => {
       expect(g.receiveAttack(0 ,0)).toBe(true);
+    })
+    test("missed/successful attack marks as shot", () => {
+      expect(g.grid[1][0].attacked).toBe(false);
+      g.receiveAttack(1, 0);
+      expect(g.grid[1][0].attacked).toBe(true);
+      expect(g.grid[0][0].attacked).toBe(false);
+      g.receiveAttack(0, 0);
+      expect(g.grid[0][0].attacked).toBe(true);
     })
     test("throws if out of bounds", () => {
       expect(() => g.receiveAttack(10, 1)).toThrow("out of bounds");
