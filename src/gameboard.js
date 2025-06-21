@@ -27,9 +27,14 @@ class Gameboard {
       throw new Error("ship cannot be placed out of bounds!");
     }
 
-
-
-
+    // place ship
+    if (vertical) {
+      // col stays same
+      for (let i = r; i < r + length; i++) this.grid[i][c] = 0;
+    } else {
+      // row stays same
+      for (let i = c; i < c + length; i++) this.grid[r][i] = 0;
+    }
   }
 }
 
