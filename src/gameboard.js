@@ -49,6 +49,9 @@ class Gameboard {
   }
 
   receiveAttack(r, c) {
+    // validate inputs
+    if (!Number.isInteger(r) || !Number.isInteger(c))
+      throw new Error("arguments must be an integer")
     // check if out of bounds
     if (r < 0 || r > 9 || c < 0 || c > 9)
       throw new Error("cannot attack out of bounds");

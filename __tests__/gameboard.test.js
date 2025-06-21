@@ -89,5 +89,16 @@ describe("gameboard tests", () => {
       expect(() => g.receiveAttack(-1, 0)).toThrow("out of bounds");
       expect(() => g.receiveAttack(0, -1)).toThrow("out of bounds");
     })
+    test("throws if given bad arguments", () => {
+      const badArgs = [
+        ["a", 1],
+        [1, "a"],
+        [1.1, 1],
+        [1, 1.1],
+      ];
+      for (const args of badArgs) {
+        expect(() => g.receiveAttack(...args)).toThrow();
+      }
+    })
   })
 });
