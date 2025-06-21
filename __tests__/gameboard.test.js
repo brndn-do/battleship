@@ -76,7 +76,7 @@ describe("gameboard tests", () => {
     });
   });
 
-  describe.only("receiveAttack() function tests", () => {
+  describe("receiveAttack() function tests", () => {
     beforeEach(() => {
       g.place(0, 0, 5);
     })

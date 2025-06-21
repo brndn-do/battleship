@@ -47,6 +47,11 @@ class Gameboard {
       for (let i = c; i < c + length; i++) this.grid[r][i] = 0;
     }
   }
+
+  receiveAttack(r, c) {
+    if (this.grid[r][c] === null)
+      return false;
+  }
 }
 
 export default Gameboard;
