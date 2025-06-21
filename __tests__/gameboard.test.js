@@ -1,4 +1,6 @@
 import Gameboard from "../src/gameboard.js";
+import Ship from "../src/ship.js";
+jest.mock('../src/ship.js');
 
 describe("gameboard tests", () => {
   let g;
@@ -96,6 +98,7 @@ describe("gameboard tests", () => {
 
   describe("receiveAttack() function tests", () => {
     beforeEach(() => {
+      Ship.mockClear();
       g.place(0, 0, 5);
     });
     test("missed attack returns false", () => {
@@ -133,6 +136,14 @@ describe("gameboard tests", () => {
       for (const args of badArgs) {
         expect(() => g.receiveAttack(...args)).toThrow();
       }
+    });
+    test("calls hit() function to correct ship when an attack lands", () => {
+      g.place(1, 0, 2); // extra ship
+      expect(g.receiveAttack(0, 0)).toBe(true);
+      const [shipA, shipB] = Ship.mock.instances;
+      console.log(shipA, shipB);
+      expect(shipA.hit).toHaveBeenCalledTimes(1);
+      expect(shipB.hit).toHaveBeenCalledTimes(0);
     });
   });
 });
