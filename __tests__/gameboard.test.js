@@ -41,16 +41,24 @@ describe("gameboard tests", () => {
     });
 
     test("doesn't place a ship out of bounds", () => {
+      expect(() => g.place(0, 5, 5)).not.toThrow();
       expect(() => g.place(8, 8, 5)).toThrow("out of bounds"); // horizontal (row stays same)
-      expect(() => g.place(9, 0, 2, true)).toThrow(""); // vertical (col stays same)
+      expect(() => g.place(9, 0, 2, true)).toThrow("out of bounds"); // vertical (col stays same)
     });
 
     test("doesn't place a ship if it would overlap", () => {
       g.place(0, 5, 5);
+      for (let i = 5; i < 10; i++)
+        expect(g.grid[0][i]).not.toBeNull();
       expect(() => g.place(0, 4, 2)).toThrow("overlap");
       g.place(5, 5, 3, true);
       expect(() => g.place(6, 3, 3)).toThrow("overlap");
     });
+
+    test("both out of bounds and overlap", () => {
+      g.place(0, 5, 5);
+      expect(() => g.place(0, 6, 5)).toThrow();
+    })
 
     test("throws when given wrong argument types", () => {
       const badArgs = [
