@@ -84,10 +84,10 @@ describe("gameboard tests", () => {
       expect(g.receiveAttack(1, 0)).toBe(false);
     })
     test("throws if out of bounds", () => {
-      expect(g.receiveAttack(10, 1)).toThrow("out of bounds");
-      expect(g.receiveAttack(0, 10)).toThrow("out of bounds");
-      expect(g.receiveAttack(-1, 0)).toThrow("out of bounds");
-      expect(g.receiveAttack(0, -1)).toThrow("out of bounds");
+      expect(() => g.receiveAttack(10, 1)).toThrow("out of bounds");
+      expect(() => g.receiveAttack(0, 10)).toThrow("out of bounds");
+      expect(() => g.receiveAttack(-1, 0)).toThrow("out of bounds");
+      expect(() => g.receiveAttack(0, -1)).toThrow("out of bounds");
     })
   })
 });
