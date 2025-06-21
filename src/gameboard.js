@@ -19,14 +19,21 @@ class Gameboard {
     if (length < 2 || length > 5)
       throw new Error("length must be between 2 and 5 inclusive");
     //
-    // done validating
+    // done validating arguments
     //
 
-    if (vertical) { // vertical placement
+    // check if it will be out of bounds
+    if ((vertical ? y : x) + length >= 9) {
+      throw new Error("ship cannot be placed out of bounds!");
+    }
+
+    if (vertical) {
+      // vertical placement
       for (let i = x; i < x + length; i++) {
         this.grid[i][y] = 0;
       }
-    } else { // horizontal placement
+    } else {
+      // horizontal placement
       for (let i = y; i < y + length; i++) {
         this.grid[x][i] = 0;
       }
