@@ -49,8 +49,10 @@ class Gameboard {
   }
 
   receiveAttack(r, c) {
-    if (this.grid[r][c] === null)
-      return false;
+    // check if out of bounds
+    if (r < 0 || r > 9 || c < 0 || c > 9)
+      throw new Error("cannot attack out of bounds");
+    if (this.grid[r][c] === null) return false;
   }
 }
 
