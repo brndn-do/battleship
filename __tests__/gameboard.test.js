@@ -77,6 +77,14 @@ describe("gameboard tests", () => {
         expect(() => g.place(...args)).toThrow();
       });
     });
+
+    test("places different ships", () => {
+      g.place(0, 0, 5);
+      for (let i = 0; i < 4; i++)
+        expect(g.grid[0][i].ship).toBe(g.grid[0][i+1].ship);
+      g.place(1, 0, 5);
+      expect(g.grid[0][0].ship).not.toBe(g.grid[1][0].ship);
+    })
   });
 
   describe("receiveAttack() function tests", () => {
