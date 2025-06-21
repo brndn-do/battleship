@@ -80,8 +80,14 @@ describe("gameboard tests", () => {
     beforeEach(() => {
       g.place(0, 0, 5);
     })
-    test("missed hit returns false", () => {
+    test("missed attack returns false", () => {
       expect(g.receiveAttack(1, 0)).toBe(false);
+    })
+    test("throws if out of bounds", () => {
+      expect(g.receiveAttack(10, 1)).toThrow("out of bounds");
+      expect(g.receiveAttack(0, 10)).toThrow("out of bounds");
+      expect(g.receiveAttack(-1, 0)).toThrow("out of bounds");
+      expect(g.receiveAttack(0, -1)).toThrow("out of bounds");
     })
   })
 });
