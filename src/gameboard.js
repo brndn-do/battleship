@@ -1,3 +1,5 @@
+import Ship from "./ship.js";
+
 class Gameboard {
   constructor() {
     this.grid = Array.from({ length: 10 }, () => {
@@ -39,13 +41,16 @@ class Gameboard {
           throw new Error("ship cannot overlap with another ship");
     }
 
+    // create ship
+    const ship = new Ship(length);
+
     // place ship
     if (vertical) {
       // col stays same
-      for (let i = r; i < r + length; i++) this.grid[i][c].ship = 0;
+      for (let i = r; i < r + length; i++) this.grid[i][c].ship = ship;
     } else {
       // row stays same
-      for (let i = c; i < c + length; i++) this.grid[r][i].ship = 0;
+      for (let i = c; i < c + length; i++) this.grid[r][i].ship = ship;
     }
   }
 
