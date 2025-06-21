@@ -23,8 +23,19 @@ class Gameboard {
     //
 
     // check if it will be out of bounds
-    if ((vertical ? r : c) + length >= 9) {
-      throw new Error("ship cannot be placed out of bounds!");
+    if ((vertical ? r : c) + length > 10) {
+      throw new Error("ship cannot be placed out of bounds");
+    }
+
+    // check if it will overlap with an exisiting ship
+    if (vertical) {
+      for (let i = r; i < r + length; i++)
+        if (this.grid[i][c] !== null)
+          throw new Error("ship cannot overlap with another ship");
+    } else {
+      for (let i = c; i < c + length; i++)
+        if (this.grid[r][i] !== null)
+          throw new Error("ship cannot overlap with another ship");
     }
 
     // place ship
