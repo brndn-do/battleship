@@ -75,4 +75,13 @@ describe("gameboard tests", () => {
       });
     });
   });
+
+  describe.only("receiveAttack() function tests", () => {
+    beforeEach(() => {
+      g.place(0, 0, 5);
+    })
+    test("missed hit returns false", () => {
+      expect(g.receiveAttack(1, 0)).toBe(false);
+    })
+  })
 });
