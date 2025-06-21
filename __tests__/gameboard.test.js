@@ -24,6 +24,7 @@ describe("gameboard tests", () => {
       g.place(0, 0, 2);
       expect(g.grid[0][0]).not.toBeNull();
       expect(g.grid[0][1]).not.toBeNull();
+      expect(g.grid[0][2]).toBeNull();
     });
 
     test("places a ship of length 2 at 0, 0 vertically", () => {
@@ -31,6 +32,7 @@ describe("gameboard tests", () => {
       g.place(0, 0, 2, true);
       expect(g.grid[0][0]).not.toBeNull();
       expect(g.grid[1][0]).not.toBeNull();
+      expect(g.grid[2][0]).toBeNull();
     });
 
     test("doesn't place a ship of length < 2 or > 5", () => {
@@ -46,8 +48,8 @@ describe("gameboard tests", () => {
     test("doesn't place a ship if it would overlap", () => {
       g.place(0, 5, 5);
       expect(() => g.place(0, 4, 2)).toThrow("overlap");
-      g.place(5, 5, 5, true);
-      expect(() => g.place(5, 3, 3)).toThrow("overlap");
+      g.place(5, 5, 3, true);
+      expect(() => g.place(6, 3, 3)).toThrow("overlap");
     });
 
     test("throws when given wrong argument types", () => {
