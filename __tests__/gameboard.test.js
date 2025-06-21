@@ -49,19 +49,26 @@ describe("gameboard tests", () => {
       expect(() => g.place(9, 0, 2, true)).toThrow("out of bounds"); // vertical (col stays same)
     });
 
-    test("doesn't place a ship if it would overlap", () => {
+    test("doesn't place a ship horizontally if it would overlap", () => {
       g.place(0, 5, 5);
-      for (let i = 5; i < 10; i++)
-        expect(g.grid[0][i].ship).not.toBeNull();
+      for (let i = 5; i < 10; i++) expect(g.grid[0][i].ship).not.toBeNull();
       expect(() => g.place(0, 4, 2)).toThrow("overlap");
       g.place(5, 5, 3, true);
       expect(() => g.place(6, 3, 3)).toThrow("overlap");
     });
 
+    test("doesn't place a ship vertically if it would overlap", () => {
+      g.place(5, 0, 5, true);
+      for (let i = 5; i < 10; i++) expect(g.grid[i][0].ship).not.toBeNull();
+      expect(() => g.place(4, 0, 2, true)).toThrow("overlap");
+      g.place(5, 5, 3);
+      expect(() => g.place(3, 6, 3, true)).toThrow("overlap");
+    });
+
     test("both out of bounds and overlap", () => {
       g.place(0, 5, 5);
       expect(() => g.place(0, 6, 5)).toThrow();
-    })
+    });
 
     test("throws when given wrong argument types", () => {
       const badArgs = [
@@ -81,22 +88,22 @@ describe("gameboard tests", () => {
     test("places different ships", () => {
       g.place(0, 0, 5);
       for (let i = 0; i < 4; i++)
-        expect(g.grid[0][i].ship).toBe(g.grid[0][i+1].ship);
+        expect(g.grid[0][i].ship).toBe(g.grid[0][i + 1].ship);
       g.place(1, 0, 5);
       expect(g.grid[0][0].ship).not.toBe(g.grid[1][0].ship);
-    })
+    });
   });
 
   describe("receiveAttack() function tests", () => {
     beforeEach(() => {
       g.place(0, 0, 5);
-    })
+    });
     test("missed attack returns false", () => {
       expect(g.receiveAttack(1, 0)).toBe(false);
-    })
+    });
     test("successful attack returns true", () => {
-      expect(g.receiveAttack(0 ,0)).toBe(true);
-    })
+      expect(g.receiveAttack(0, 0)).toBe(true);
+    });
     test("missed/successful attack marks as attacked", () => {
       expect(g.grid[1][0].attacked).toBe(false);
       g.receiveAttack(1, 0);
@@ -104,18 +111,18 @@ describe("gameboard tests", () => {
       expect(g.grid[0][0].attacked).toBe(false);
       g.receiveAttack(0, 0);
       expect(g.grid[0][0].attacked).toBe(true);
-    })
+    });
     test("throws if try to attack a cell that's already been attacked", () => {
       g.receiveAttack(5, 5);
-      expect(g.grid[5][5].attacked).toBe(true)
+      expect(g.grid[5][5].attacked).toBe(true);
       expect(() => g.receiveAttack(5, 5)).toThrow("already attacked");
-    })
+    });
     test("throws if out of bounds", () => {
       expect(() => g.receiveAttack(10, 1)).toThrow("out of bounds");
       expect(() => g.receiveAttack(0, 10)).toThrow("out of bounds");
       expect(() => g.receiveAttack(-1, 0)).toThrow("out of bounds");
       expect(() => g.receiveAttack(0, -1)).toThrow("out of bounds");
-    })
+    });
     test("throws if given bad arguments", () => {
       const badArgs = [
         ["a", 1],
@@ -126,6 +133,6 @@ describe("gameboard tests", () => {
       for (const args of badArgs) {
         expect(() => g.receiveAttack(...args)).toThrow();
       }
-    })
-  })
+    });
+  });
 });
