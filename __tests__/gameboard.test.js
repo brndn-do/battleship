@@ -90,13 +90,18 @@ describe("gameboard tests", () => {
     test("successful attack returns true", () => {
       expect(g.receiveAttack(0 ,0)).toBe(true);
     })
-    test("missed/successful attack marks as shot", () => {
+    test("missed/successful attack marks as attacked", () => {
       expect(g.grid[1][0].attacked).toBe(false);
       g.receiveAttack(1, 0);
       expect(g.grid[1][0].attacked).toBe(true);
       expect(g.grid[0][0].attacked).toBe(false);
       g.receiveAttack(0, 0);
       expect(g.grid[0][0].attacked).toBe(true);
+    })
+    test("throws if try to attack a cell that's already been attacked", () => {
+      g.receiveAttack(5, 5);
+      expect(g.grid[5][5].attacked).toBe(true)
+      expect(() => g.receiveAttack(5, 5)).toThrow("already attacked");
     })
     test("throws if out of bounds", () => {
       expect(() => g.receiveAttack(10, 1)).toThrow("out of bounds");
