@@ -61,9 +61,16 @@ class Gameboard {
     // check if out of bounds
     if (r < 0 || r > 9 || c < 0 || c > 9)
       throw new Error("cannot attack out of bounds");
+    // check already attacked
     if (this.grid[r][c].attacked) throw new Error("already attacked");
+    // if pass, set attacked to true
     this.grid[r][c].attacked = true;
-    return this.grid[r][c].ship !== null;
+    // check if ship is there
+    if (this.grid[r][c].ship !== null) {
+      this.grid[r][c].ship.hit();
+      return true;
+    }
+    return false;
   }
 }
 
