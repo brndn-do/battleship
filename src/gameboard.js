@@ -2,6 +2,7 @@ import Ship from "./ship.js";
 
 class Gameboard {
   constructor() {
+    this.shipsLeft = 0;
     this.grid = Array.from({ length: 10 }, () => {
       return Array.from({ length: 10 }, () => {
         return { ship: null, attacked: false };
@@ -43,6 +44,7 @@ class Gameboard {
 
     // create ship
     const ship = new Ship(length);
+    this.shipsLeft++;
 
     // place ship
     if (vertical) {
@@ -67,10 +69,19 @@ class Gameboard {
     this.grid[r][c].attacked = true;
     // check if ship is there
     if (this.grid[r][c].ship !== null) {
+      // hit
       this.grid[r][c].ship.hit();
+      // check if sunk
+      if (this.grid[r][c].ship.isSunk())
+        // decrement ships counter
+        this.shipsLeft--;
       return true;
     }
     return false;
+  }
+
+  report() {
+    return this.shipsLeft === 0;
   }
 }
 
