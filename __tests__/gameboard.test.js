@@ -25,7 +25,6 @@ describe("gameboard tests", () => {
     test("places a ship of length 2 at 0, 0 horizontally", () => {
       // horizontal (row stays same)
       g.place(0, 0, 2);
-      console.log(g.grid);
       expect(g.grid[0][0].ship).not.toBeNull();
       expect(g.grid[0][1].ship).not.toBeNull();
       expect(g.grid[0][2].ship).toBeNull();
