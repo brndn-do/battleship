@@ -1,3 +1,31 @@
+function clearPage() {
+  const main = document.querySelector(".main");
+  const component = document.querySelector(".main *");
+  main.removeChild(component);
+}
+
+function landing() {
+  const main = document.querySelector(".main");
+  const landing = document.createElement("div");
+  landing.classList.add("landing");
+
+  const heading = document.createElement("h1");
+  heading.classList.add("heading");
+  heading.textContent = "battleship";
+
+  const button = document.createElement("button");
+  button.textContent = "play";
+  button.addEventListener("click", () => {
+    clearPage();
+    game();
+  })
+
+  landing.appendChild(heading);
+  landing.appendChild(button);
+
+  main.appendChild(landing);
+}
+
 function game() {
   const main = document.querySelector(".main");
 
@@ -40,4 +68,4 @@ function game() {
   main.appendChild(game);
 }
 
-export default game;
+export { landing };

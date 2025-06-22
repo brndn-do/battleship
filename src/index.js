@@ -1,8 +1,6 @@
 import "./styles.css";
-import "typeface-roboto"
+import "typeface-roboto";
 
-import landing from "./landing.js";
-import game from "./game.js";
+import { landing } from "./interface.js";
 
-//landing();
-game();
+landing();
