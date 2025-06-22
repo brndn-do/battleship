@@ -1,4 +1,6 @@
 import "./styles.css";
 import "typeface-roboto"
 
-console.log("hello world");
+import landing from "./landing.js";
+
+landing();
