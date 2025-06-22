@@ -3,7 +3,7 @@
 body {
   background-color: rgb(42, 42, 42);
   font-family: 'Roboto', sans-serif;
-  height: 100vh
+  height: 100vh;
 }
 
 .main {
@@ -23,13 +23,21 @@ body {
 }
 
 .heading {
-  color: white;
   font-weight: 300;
+  color: white;
+  margin: 1.5rem 0;
 }
 
 button {
   cursor: pointer;
-  padding: .25rem 1.25rem;
+  padding: .5rem 1.75rem;
   border: none;
   border-radius: .4rem;
+  background: rgb(60, 60, 60);
+  color: white;
+  font-size: large;
+}
+
+button:hover {
+  background-color: rgb(66, 66, 66);
 }
