@@ -48,25 +48,15 @@ body {
 
   --cell-size: 2.5rem;
 
-  .player {
+  .player, .computer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     h1 {
       font-weight: 300;
       color: white;
     }
-    .playerBoard {
-      display: grid;
-      grid-template-columns: repeat(10, var(--cell-size));
-      border-right: 1px solid white;
-      border-bottom: 1px solid white;
-    }
-  }
-
-  .computer {
-    h1 {
-      font-weight: 300;
-      color: white;
-    }
-    .computerBoard {
+    .board {
       display: grid;
       grid-template-columns: repeat(10, var(--cell-size));
       border-right: 1px solid white;

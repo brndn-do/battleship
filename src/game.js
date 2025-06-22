@@ -17,10 +17,10 @@ function game() {
   computer.appendChild(computerText);
 
   const playerBoard = document.createElement("div");
-  playerBoard.classList.add("playerBoard");
+  playerBoard.classList.add("board");
 
   const computerBoard = document.createElement("div");
-  computerBoard.classList.add("computerBoard");
+  computerBoard.classList.add("board");
 
   for (let i = 0; i < 100; i++) {
     const playerCell = document.createElement("div");
