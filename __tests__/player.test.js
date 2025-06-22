@@ -9,3 +9,7 @@ test("computer has real property false", () => {
   const computer = new Player(false);
   expect(computer.real).toBe(false);
 })
+
+test("throws when given bad arguments", () => {
+  expect(() => new Player("a")).toThrow("argument");
+})
