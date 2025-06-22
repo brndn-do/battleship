@@ -5,6 +5,7 @@ class Player {
     if (typeof(real) !== "boolean")
       throw new Error("argument must be boolean");
     this.real = real;
+    this.gameboard = new Gameboard();
   }
 }
 
