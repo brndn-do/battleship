@@ -1,6 +1,3 @@
-//ship.js
-"use strict";
-
 class Ship {
   constructor(length) {
     if (!Number.isInteger(length) || length <= 0) {
