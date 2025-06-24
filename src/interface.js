@@ -87,7 +87,13 @@ class Interface {
           const cell = document.querySelector(
             `.${player.real ? "player" : "computer"}.cell${r * 10 + c}`
           );
-          cell.classList.add("occupied");
+          cell.classList.add("hasShip");
+        }
+        if (grid[r][c].attacked) {
+          const cell = document.querySelector(
+            `.${player.real ? "player" : "computer"}.cell${r * 10 + c}`
+          );
+          cell.classList.add("attacked");
         }
       }
     }

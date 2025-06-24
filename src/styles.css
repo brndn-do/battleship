@@ -76,8 +76,13 @@ body {
     background-color: white;
   }
 
-  .cell.occupied {
+  .cell.hasShip {
     cursor: default;
     background-color: white;
+  }
+
+  .cell.attacked {
+    cursor: default;
+    background-color: red;
   }
 }

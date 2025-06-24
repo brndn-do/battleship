@@ -27,6 +27,3 @@ ui.renderBoard(player);
 ui.renderBoard(computer);
 
 // start game
-
-
-
