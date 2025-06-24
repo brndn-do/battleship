@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "webpack serve --mode development --open --port 8080",
+    "build": "webpack --mode production",
     "test": "jest"
   },
   "repository": {
