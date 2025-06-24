@@ -98,6 +98,7 @@ class Display {
     }
   }
 
+  // given a winner, renders appropriate game over screen
   renderGameOver(winner) {
     const main = document.querySelector(".main");
     const gameOver = document.createElement("div");
