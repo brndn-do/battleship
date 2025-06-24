@@ -1,4 +1,4 @@
-class Interface {
+class Display {
   constructor() {}
 
   // clears page
@@ -9,7 +9,7 @@ class Interface {
   }
 
   // renders landing page
-  landing() {
+  renderLanding() {
     const main = document.querySelector(".main");
     const landing = document.createElement("div");
     landing.classList.add("landing");
@@ -20,10 +20,6 @@ class Interface {
 
     const button = document.createElement("button");
     button.textContent = "play";
-    button.addEventListener("click", () => {
-      this.clearPage();
-      this.game();
-    });
 
     landing.appendChild(heading);
     landing.appendChild(button);
@@ -32,7 +28,7 @@ class Interface {
   }
 
   // renders game page
-  game() {
+  renderGame() {
     const main = document.querySelector(".main");
 
     const game = document.createElement("div");
@@ -65,6 +61,7 @@ class Interface {
       computerCell.classList.add("computer");
       computerCell.classList.add("cell");
       computerCell.classList.add(`cell${i}`);
+
       playerBoard.appendChild(playerCell);
       computerBoard.appendChild(computerCell);
     }
@@ -78,26 +75,41 @@ class Interface {
     main.appendChild(game);
   }
 
-  // given a player object, renders their board
-  renderBoard(player) {
-    const grid = player.gameboard.grid;
+  // given a player and computer, renders their boards
+  renderBoard(player, computer) {
+    let grid = player.gameboard.grid;
     for (let r = 0; r < 10; r++) {
       for (let c = 0; c < 10; c++) {
-        if (grid[r][c].ship) {
-          const cell = document.querySelector(
-            `.${player.real ? "player" : "computer"}.cell${r * 10 + c}`
-          );
-          cell.classList.add("hasShip");
-        }
-        if (grid[r][c].attacked) {
-          const cell = document.querySelector(
-            `.${player.real ? "player" : "computer"}.cell${r * 10 + c}`
-          );
-          cell.classList.add("attacked");
-        }
+        // select cell # row * 10 + column that has player or computer class
+        const cell = document.querySelector(`.player.cell${r * 10 + c}`);
+        if (grid[r][c].ship) cell.classList.add("hasShip");
+        if (grid[r][c].attacked) cell.classList.add("attacked");
+      }
+    }
+
+    grid = computer.gameboard.grid;
+    for (let r = 0; r < 10; r++) {
+      for (let c = 0; c < 10; c++) {
+        // select cell # row * 10 + column that has player or computer class
+        const cell = document.querySelector(`.computer.cell${r * 10 + c}`);
+        if (grid[r][c].ship) cell.classList.add("hasShip");
+        if (grid[r][c].attacked) cell.classList.add("attacked");
       }
     }
   }
+
+  renderGameOver(winner) {
+    const main = document.querySelector(".main");
+    const gameOver = document.createElement("div");
+    gameOver.classList.add("gameOver");
+    const heading = document.createElement("h1");
+    heading.textContent = "game over!";
+    const outcome = document.createElement("h2");
+    outcome.textContent = `you ${winner.real ? "win" : "lose"}!`;
+    gameOver.appendChild(heading);
+    gameOver.appendChild(outcome);
+    main.appendChild(gameOver);
+  }
 }
 
-export default Interface;
+export default Display;

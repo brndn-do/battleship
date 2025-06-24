@@ -44,7 +44,7 @@ body {
 
 .game {
   display: flex;
-  gap: 10rem;
+  gap: 25vw;
 
   --cell-size: 2.5rem;
 
@@ -71,18 +71,44 @@ body {
     border-top: 1px solid white;
   }
 
-  .cell:hover {
+  .cell.canClick:hover {
     cursor: pointer;
     background-color: white;
   }
 
-  .cell.hasShip {
+  .player.cell.hasShip {
     cursor: default;
     background-color: white;
   }
 
   .cell.attacked {
     cursor: default;
-    background-color: red;
+    background-color: black;
+  }
+
+  .cell.hasShip.attacked {
+    cursor: default;
+    background-color: rgb(240, 41, 41);
+  }
+}
+
+.gameOver {
+  z-index: 9998;
+  position: fixed;
+  background-color: rgba(0,0,0,.75);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  h1, h2 {
+    margin: 0;
+    padding: 0;
+    font-weight: 300;
+    color: white;
+    margin: 1.5rem 0;
+    opacity: 100%;
   }
 }
