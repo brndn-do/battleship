@@ -75,4 +75,9 @@ body {
     cursor: pointer;
     background-color: white;
   }
+
+  .cell.occupied {
+    cursor: default;
+    background-color: white;
+  }
 }
