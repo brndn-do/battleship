@@ -82,6 +82,7 @@ class Display {
       for (let c = 0; c < 10; c++) {
         // select cell # row * 10 + column that has player or computer class
         const cell = document.querySelector(`.player.cell${r * 10 + c}`);
+        cell.classList.remove("hasShip", "attacked", "canClick");
         if (grid[r][c].ship) cell.classList.add("hasShip");
         if (grid[r][c].attacked) cell.classList.add("attacked");
       }
@@ -92,8 +93,10 @@ class Display {
       for (let c = 0; c < 10; c++) {
         // select cell # row * 10 + column that has player or computer class
         const cell = document.querySelector(`.computer.cell${r * 10 + c}`);
+        cell.classList.remove("hasShip", "attacked", "canClick");
         if (grid[r][c].ship) cell.classList.add("hasShip");
         if (grid[r][c].attacked) cell.classList.add("attacked");
+        else cell.classList.add("canClick");
       }
     }
   }
