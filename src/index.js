@@ -17,10 +17,12 @@ const computer = new Player(false);
 player.gameboard.place(1, 3, 2);
 player.gameboard.place(2, 6, 3);
 player.gameboard.place(3, 1, 3, true);
+player.gameboard.place(0, 9, 5, true);
 
 computer.gameboard.place(1, 3, 2);
 computer.gameboard.place(2, 6, 3);
 computer.gameboard.place(3, 1, 3, true);
+computer.gameboard.place(0, 9, 5, true);
 
 display.renderBoard(player, computer);
 

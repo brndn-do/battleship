@@ -59,8 +59,6 @@ body {
     .board {
       display: grid;
       grid-template-columns: repeat(10, var(--cell-size));
-      border-right: 1px solid white;
-      border-bottom: 1px solid white;
     }
   }
 
@@ -71,6 +69,14 @@ body {
     border-top: 1px solid white;
   }
 
+  .cell90,.cell91,.cell92,.cell93,.cell94,.cell95,.cell96,.cell97,.cell98,.cell99 {
+    border-bottom: 1px solid white;
+  }
+
+  .cell9,.cell19,.cell29,.cell39,.cell49,.cell59,.cell69,.cell79,.cell89,.cell99 {
+    border-right: 1px solid white;
+  }
+
   .cell.canClick:hover {
     cursor: pointer;
     background-color: white;
@@ -78,7 +84,7 @@ body {
 
   .player.cell.hasShip {
     cursor: default;
-    background-color: white;
+    background-color: rgb(51, 196, 92);
   }
 
   .cell.attacked {
