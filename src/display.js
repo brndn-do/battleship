@@ -80,7 +80,7 @@ class Display {
     let grid = player.gameboard.grid;
     for (let r = 0; r < 10; r++) {
       for (let c = 0; c < 10; c++) {
-        // select cell # row * 10 + column that has player or computer class
+        // select cell # row * 10 + column that has player class
         const cell = document.querySelector(`.player.cell${r * 10 + c}`);
         cell.classList.remove("hasShip", "attacked", "canClick");
         if (grid[r][c].ship) cell.classList.add("hasShip");
@@ -91,7 +91,7 @@ class Display {
     grid = computer.gameboard.grid;
     for (let r = 0; r < 10; r++) {
       for (let c = 0; c < 10; c++) {
-        // select cell # row * 10 + column that has player or computer class
+        // select cell # row * 10 + column that has computer class
         const cell = document.querySelector(`.computer.cell${r * 10 + c}`);
         cell.classList.remove("hasShip", "attacked", "canClick");
         if (grid[r][c].ship) cell.classList.add("hasShip");
