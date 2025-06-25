@@ -7,14 +7,13 @@ import Player from "./player.js";
 const display = new Display();
 display.renderLanding();
 
+// create new players
+const player = new Player(true);
+const computer = new Player(false);
+
 function startGame() {
   display.clearPage();
   display.renderGame();
-  
-  // create new players
-  const player = new Player(true);
-  const computer = new Player(false);
-  
   display.renderBoard(player, computer);
   
   // happens when user clicks on clickable cell
@@ -64,5 +63,11 @@ function startGame() {
   display.renderBoard(player, computer);
 }
 
+function startPlace() {
+  display.clearPage();
+  // assume everyone finished placing
+  startGame();
+}
+
 const playButton = document.querySelector("button");
-playButton.addEventListener("click", startGame);
+playButton.addEventListener("click", startPlace);
