@@ -4,8 +4,9 @@ class Display {
   // clears page
   clearPage() {
     const main = document.querySelector(".main");
-    const component = document.querySelector(".main *");
-    main.removeChild(component);
+    while (main.firstChild) {
+      main.removeChild(main.firstChild);
+    }
   }
 
   // renders landing page
