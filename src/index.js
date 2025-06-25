@@ -4,13 +4,12 @@ import "typeface-roboto";
 import Display from "./display.js";
 import Player from "./player.js";
 
+// globals
 const display = new Display();
-display.renderLanding();
-
-// create new players
 const player = new Player(true);
 const computer = new Player(false);
 
+// callbacks
 function startGame() {
   display.clearPage();
   display.renderGame();
@@ -69,5 +68,7 @@ function startPlace() {
   startGame();
 }
 
+// landing page
+display.renderLanding();
 const playButton = document.querySelector("button");
 playButton.addEventListener("click", startPlace);
