@@ -9,7 +9,7 @@ describe("gameboard tests", () => {
     g = new Gameboard();
   });
 
-  test("initializes a 10x10 grid of cells containing .ship and .attacked", () => {
+  test("initializes a 10x10 grid of cells containing .ship, .attacked, and .canClick", () => {
     expect(g.grid.length).toBe(10);
     for (const r of g.grid) {
       expect(r.length).toBe(10);
@@ -19,6 +19,7 @@ describe("gameboard tests", () => {
         expect(c).toEqual({
           ship: null,
           attacked: false,
+          canClick: false,
         });
       }
     }
