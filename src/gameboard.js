@@ -5,7 +5,7 @@ class Gameboard {
     this.shipsLeft = 0;
     this.grid = Array.from({ length: 10 }, () => {
       return Array.from({ length: 10 }, () => {
-        return { ship: null, attacked: false, canClick: false };
+        return { ship: null, attacked: false, canClick: false, highlighted: false };
       });
     });
   }
