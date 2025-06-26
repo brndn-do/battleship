@@ -87,10 +87,11 @@ class Display {
           const cell = document.querySelector(
             `.${i == 0 ? "player" : "computer"}.cell${r * 10 + c}`
           );
-          cell.classList.remove("hasShip", "attacked", "canClick");
+          cell.classList.remove("hasShip", "attacked", "canClick", "highlighted");
           if (grid[r][c].ship) cell.classList.add("hasShip");
           if (grid[r][c].attacked) cell.classList.add("attacked");
           if (grid[r][c].canClick) cell.classList.add("canClick");
+          if (grid[r][c].highlighted) cell.classList.add("highlighted");
         }
       }
     }

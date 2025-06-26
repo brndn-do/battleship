@@ -82,6 +82,10 @@ body {
     background-color: white;
   }
 
+  .cell.highlighted {
+    background-color: white;
+  }
+
   .player.cell.hasShip {
     cursor: default;
     background-color: rgb(51, 196, 92);
