@@ -4,8 +4,9 @@ class Display {
   // clears page
   clearPage() {
     const main = document.querySelector(".main");
-    const component = document.querySelector(".main *");
-    main.removeChild(component);
+    while (main.firstChild) {
+      main.removeChild(main.firstChild);
+    }
   }
 
   // renders landing page
@@ -31,8 +32,10 @@ class Display {
   renderGame() {
     const main = document.querySelector(".main");
 
-    const game = document.createElement("div");
+    const game = document.createElement("game");
     game.classList.add("game");
+    const boards = document.createElement("div");
+    boards.classList.add("boards");
 
     const player = document.createElement("div");
     player.classList.add("player");
@@ -69,36 +72,51 @@ class Display {
     player.appendChild(playerBoard);
     computer.appendChild(computerBoard);
 
-    game.appendChild(player);
-    game.appendChild(computer);
+    boards.appendChild(player);
+    boards.appendChild(computer);
 
+    game.appendChild(boards);
     main.appendChild(game);
+
+    const menu = document.createElement("div");
+    menu.classList.add("menu");
+    main.appendChild(menu);
   }
 
   // given a player and computer, renders their boards
   renderBoard(player, computer) {
-    let grid = player.gameboard.grid;
-    for (let r = 0; r < 10; r++) {
-      for (let c = 0; c < 10; c++) {
-        // select cell # row * 10 + column that has player or computer class
-        const cell = document.querySelector(`.player.cell${r * 10 + c}`);
-        cell.classList.remove("hasShip", "attacked", "canClick");
-        if (grid[r][c].ship) cell.classList.add("hasShip");
-        if (grid[r][c].attacked) cell.classList.add("attacked");
+    const grids = [player.gameboard.grid, computer.gameboard.grid];
+    for (let i = 0; i < 2; i++) {
+      const grid = grids[i];
+      for (let r = 0; r < 10; r++) {
+        for (let c = 0; c < 10; c++) {
+          // select cell # (row * 10 + column)
+          const cell = document.querySelector(
+            `.${i == 0 ? "player" : "computer"}.cell${r * 10 + c}`
+          );
+          cell.classList.remove(
+            "hasShip",
+            "attacked",
+            "canClick",
+            "highlighted"
+          );
+          if (grid[r][c].ship) cell.classList.add("hasShip");
+          if (grid[r][c].attacked) cell.classList.add("attacked");
+          if (grid[r][c].canClick) cell.classList.add("canClick");
+          if (grid[r][c].highlighted) cell.classList.add("highlighted");
+        }
       }
     }
+  }
 
-    grid = computer.gameboard.grid;
-    for (let r = 0; r < 10; r++) {
-      for (let c = 0; c < 10; c++) {
-        // select cell # row * 10 + column that has player or computer class
-        const cell = document.querySelector(`.computer.cell${r * 10 + c}`);
-        cell.classList.remove("hasShip", "attacked", "canClick");
-        if (grid[r][c].ship) cell.classList.add("hasShip");
-        if (grid[r][c].attacked) cell.classList.add("attacked");
-        else cell.classList.add("canClick");
-      }
-    }
+  renderPlace(shipName) {
+    const menu = document.querySelector(".menu");
+    const info = document.createElement("h1");
+    info.textContent = `place your ${shipName}`;
+    const rotateButton = document.createElement("button");
+    rotateButton.classList.add("rotate");
+    rotateButton.textContent = "rotate";
+    menu.append(info, rotateButton);
   }
 
   // given a winner, renders appropriate game over screen

@@ -5,9 +5,40 @@ class Gameboard {
     this.shipsLeft = 0;
     this.grid = Array.from({ length: 10 }, () => {
       return Array.from({ length: 10 }, () => {
-        return { ship: null, attacked: false };
+        return { ship: null, attacked: false, canClick: false, highlighted: false };
       });
     });
+  }
+
+  canPlace(r, c, length, vertical = false) {
+    // validate arguments
+    if (
+      !Number.isInteger(r) ||
+      !Number.isInteger(c) ||
+      !Number.isInteger(length)
+    )
+      return false;
+    if (typeof vertical !== "boolean")
+      return false;
+    if (length < 2 || length > 5)
+      return false;
+
+    // check if it will be out of bounds
+    if ((vertical ? r : c) + length > 10) {
+      return false;
+    }
+
+    // check if it will overlap with an exisiting ship
+    if (vertical) {
+      for (let i = r; i < r + length; i++)
+        if (this.grid[i][c].ship !== null)
+          return false;
+    } else {
+      for (let i = c; i < c + length; i++)
+        if (this.grid[r][i].ship !== null)
+          return false;
+    }
+    return true;
   }
 
   place(r, c, length, vertical = false) {

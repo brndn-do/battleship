@@ -9,7 +9,7 @@ describe("gameboard tests", () => {
     g = new Gameboard();
   });
 
-  test("initializes a 10x10 grid of cells containing .ship and .attacked", () => {
+  test("initializes a 10x10 grid of cells containing .ship, .attacked, .canClick, and .highlighted", () => {
     expect(g.grid.length).toBe(10);
     for (const r of g.grid) {
       expect(r.length).toBe(10);
@@ -19,14 +19,17 @@ describe("gameboard tests", () => {
         expect(c).toEqual({
           ship: null,
           attacked: false,
+          canClick: false,
+          highlighted: false
         });
       }
     }
   });
 
-  describe("place() function tests", () => {
+  describe("place() and canPlace() function tests", () => {
     test("places a ship of length 2 at 0, 0 horizontally", () => {
       // horizontal (row stays same)
+      expect(g.canPlace(0, 0, 2)).toBe(true);
       g.place(0, 0, 2);
       expect(g.grid[0][0].ship).not.toBeNull();
       expect(g.grid[0][1].ship).not.toBeNull();
@@ -35,6 +38,7 @@ describe("gameboard tests", () => {
 
     test("places a ship of length 2 at 0, 0 vertically", () => {
       // vertical (col stays same)
+      expect(g.canPlace(0, 0, 2, true)).toBe(true);
       g.place(0, 0, 2, true);
       expect(g.grid[0][0].ship).not.toBeNull();
       expect(g.grid[1][0].ship).not.toBeNull();
@@ -42,34 +46,46 @@ describe("gameboard tests", () => {
     });
 
     test("doesn't place a ship of length < 2 or > 5", () => {
+      expect(g.canPlace(0, 0, 1)).toBe(false);
       expect(() => g.place(0, 0, 1)).toThrow();
+      expect(g.canPlace(5, 5, 6)).toBe(false);
       expect(() => g.place(5, 5, 6)).toThrow();
     });
 
     test("doesn't place a ship out of bounds", () => {
+      expect(g.canPlace(0, 5, 5)).toBe(true);
       expect(() => g.place(0, 5, 5)).not.toThrow();
+      expect(g.canPlace(8, 8, 5)).toBe(false);
       expect(() => g.place(8, 8, 5)).toThrow("out of bounds"); // horizontal (row stays same)
+      expect(g.canPlace(9, 0, 2, true)).toBe(false);
       expect(() => g.place(9, 0, 2, true)).toThrow("out of bounds"); // vertical (col stays same)
     });
 
     test("doesn't place a ship horizontally if it would overlap", () => {
       g.place(0, 5, 5);
       for (let i = 5; i < 10; i++) expect(g.grid[0][i].ship).not.toBeNull();
+      expect(g.canPlace(0, 4, 2)).toBe(false);
       expect(() => g.place(0, 4, 2)).toThrow("overlap");
+      expect(g.canPlace(5, 5, 3, true)).toBe(true);
       g.place(5, 5, 3, true);
+      expect(g.canPlace(6, 3, 3)).toBe(false);
       expect(() => g.place(6, 3, 3)).toThrow("overlap");
     });
 
     test("doesn't place a ship vertically if it would overlap", () => {
       g.place(5, 0, 5, true);
       for (let i = 5; i < 10; i++) expect(g.grid[i][0].ship).not.toBeNull();
+      expect(g.canPlace(4, 0, 2, true)).toBe(false);
       expect(() => g.place(4, 0, 2, true)).toThrow("overlap");
+      expect(g.canPlace(5, 5, 3)).toBe(true);
       g.place(5, 5, 3);
+      expect(g.canPlace(3, 6, 3, true)).toBe(false);
       expect(() => g.place(3, 6, 3, true)).toThrow("overlap");
     });
 
     test("both out of bounds and overlap", () => {
       g.place(0, 5, 5);
+      expect(g.canPlace(0, 6, 5)).toBe(false);
       expect(() => g.place(0, 6, 5)).toThrow();
     });
 
