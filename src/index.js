@@ -8,11 +8,22 @@ import Player from "./player.js";
 const display = new Display();
 const player = new Player(true);
 const computer = new Player(false);
+const shipTypes = [
+  [5, "carrier"],
+  [4, "battleship"],
+  [3, "cruiser"],
+  [3, "submarine"],
+  [2, "destroyer"],
+];
 
 function startGame() {
   display.clearPage();
   display.renderGame();
   display.renderBoard(player, computer);
+
+  // clear all .canClick
+  for (let r = 0; r < 10; r++)
+    for (let c = 0; c < 10; c++) player.gameboard.grid[r][c].canClick = false;
 
   // happens when user clicks on clickable cell
   function attack(event) {
@@ -62,7 +73,16 @@ function startGame() {
 }
 
 // start placing ship of length shipLength horizontally/vertically
-function startPlace(shipLength = 0, vertical = false) {
+function startPlace(index, vertical = false) {
+  
+  if (index === shipTypes.length) // we have placed all ships, start the game
+    return startGame();
+  const shipType = shipTypes[index];
+  const shipLength = shipType[0];
+  const shipName = shipType[1];
+  // all of player's cells
+  const cells = document.querySelectorAll(".player.cell");
+
   function highlightCells(event) {
     // clear all highlights
     for (let r = 0; r < 10; r++)
@@ -87,32 +107,52 @@ function startPlace(shipLength = 0, vertical = false) {
     display.renderBoard(player, computer);
   }
 
-  display.clearPage();
-  display.renderGame();
+  function placeShip(event) {
+    // get cell number, calculate row and col number
+    const cellNum = parseInt(event.target.classList[2].slice(4));
+    const rowNum = Math.floor(cellNum / 10);
+    const colNum = cellNum % 10;
+    // if the target cannot be clicked, return
+    if (!player.gameboard.grid[rowNum][colNum].canClick) return;
+
+    // clear all listeners
+
+    cells.forEach((cell) =>
+      cell.removeEventListener("mouseover", highlightCells)
+    );
+    cells.forEach((cell) => cell.removeEventListener("click", placeShip));
+    // place
+    player.gameboard.place(rowNum, colNum, shipLength, vertical);
+    display.renderBoard(player, computer);
+    // call next startPlace
+    startPlace(index + 1);
+  }
 
   // clear all .canClick
   for (let r = 0; r < 10; r++)
     for (let c = 0; c < 10; c++) player.gameboard.grid[r][c].canClick = false;
 
-  // make player's cells clickable based on vertical and ship length
-  for (let r = 0; r < (vertical ? 11 - shipLength : 10); r++) {
-    for (let c = 0; c < (vertical ? 10 : 11 - shipLength); c++) {
-      player.gameboard.grid[r][c].canClick = true;
+  // set cells as clickable
+  for (let r = 0; r < 10; r++) {
+    for (let c = 0; c < 10; c++) {
+      if (player.gameboard.canPlace(r, c, shipLength, vertical))
+        player.gameboard.grid[r][c].canClick = true;
     }
   }
 
-  // event listener for highlighting
-  const cells = document.querySelectorAll(".player.cell");
+  // event listeners
   cells.forEach((cell) => cell.addEventListener("mouseover", highlightCells));
+  cells.forEach((cell) => cell.addEventListener("click", placeShip));
 
   // render
   display.renderBoard(player, computer);
-
-  // assume everyone finished placing
-  // startGame();
 }
 
 // landing page
 display.renderLanding();
 const playButton = document.querySelector("button");
-playButton.addEventListener("click", () => startPlace(5));
+playButton.addEventListener("click", () => {
+  display.clearPage();
+  display.renderGame();
+  startPlace(0);
+});
