@@ -16,9 +16,26 @@ const shipTypes = [
   [2, "destroyer"],
 ];
 
+function computerPlace() {
+  for (const shipType of shipTypes) {
+    const length = shipType[0];
+    const vertical = Math.floor(Math.random() * 2) === 0; // randomly choose orientation
+    const validCells = [];
+    for (let r = 0; r < 10; r++)
+      for (let c = 0; c < 10; c++)
+        if (computer.gameboard.canPlace(r, c, length, vertical))
+          validCells.push([r, c]);
+    const index = Math.floor(Math.random() * validCells.length);
+    const r = validCells[index][0];
+    const c = validCells[index][1];
+    computer.gameboard.place(r, c, length, vertical);
+  }
+}
+
 function startGame() {
   display.clearPage();
   display.renderGame();
+  computerPlace();
   display.renderBoard(player, computer);
 
   // clear all .canClick
@@ -137,7 +154,9 @@ function startPlace(index, vertical = false) {
 
   display.renderPlace(shipName);
   const rotateButton = document.querySelector(".rotate");
-  rotateButton.addEventListener("click", () => {return startPlace(index, !vertical);});
+  rotateButton.addEventListener("click", () => {
+    return startPlace(index, !vertical);
+  });
 
   // clear all .canClick
   for (let r = 0; r < 10; r++)
@@ -152,7 +171,9 @@ function startPlace(index, vertical = false) {
   // event listeners: we add event listeners to all cells (even ones that can't be clicked)
   // in each callback, we check for .canClick and simply return if it can't be clicked
   cells.forEach((cell) => cell.addEventListener("mouseover", highlightCells));
-  cells.forEach((cell => cell.addEventListener("mouseleave", unhighlightCells)))
+  cells.forEach((cell) =>
+    cell.addEventListener("mouseleave", unhighlightCells)
+  );
   cells.forEach((cell) => cell.addEventListener("click", placeShip));
 
   // render

@@ -108,7 +108,7 @@ body {
       background-color: white;
     }
 
-    .player.cell.hasShip {
+    .cell.showShip {
       cursor: default;
       background-color: rgb(51, 196, 92);
     }
