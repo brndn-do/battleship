@@ -114,6 +114,7 @@ class Display {
     const info = document.createElement("h1");
     info.textContent = `place your ${shipName}`;
     const rotateButton = document.createElement("button");
+    rotateButton.classList.add("rotate");
     rotateButton.textContent = "rotate";
     menu.append(info, rotateButton);
   }

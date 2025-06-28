@@ -74,8 +74,12 @@ function startGame() {
 
 // start placing ship of length shipLength horizontally/vertically
 function startPlace(index, vertical = false) {
-  
-  if (index === shipTypes.length) // we have placed all ships, start the game
+  // clear
+  display.clearPage();
+  display.renderGame();
+
+  if (index === shipTypes.length)
+    // we have placed all ships, start the game
     return startGame();
   const shipType = shipTypes[index];
   const shipLength = shipType[0];
@@ -116,7 +120,9 @@ function startPlace(index, vertical = false) {
     if (!player.gameboard.grid[rowNum][colNum].canClick) return;
 
     // clear all listeners
-    cells.forEach((cell) => cell.removeEventListener("mouseover", highlightCells));
+    cells.forEach((cell) =>
+      cell.removeEventListener("mouseover", highlightCells)
+    );
     cells.forEach((cell) => cell.removeEventListener("click", placeShip));
     // place
     player.gameboard.place(rowNum, colNum, shipLength, vertical);
@@ -126,6 +132,8 @@ function startPlace(index, vertical = false) {
   }
 
   display.renderPlace(shipName);
+  const rotateButton = document.querySelector(".rotate");
+  rotateButton.addEventListener("click", () => {return startPlace(index, !vertical);});
 
   // clear all .canClick
   for (let r = 0; r < 10; r++)
@@ -150,7 +158,6 @@ function startPlace(index, vertical = false) {
 display.renderLanding();
 const playButton = document.querySelector("button");
 playButton.addEventListener("click", () => {
-  display.clearPage();
-  display.renderGame();
+
   startPlace(0);
 });
