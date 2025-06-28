@@ -116,31 +116,29 @@ function startPlace(index, vertical = false) {
     if (!player.gameboard.grid[rowNum][colNum].canClick) return;
 
     // clear all listeners
-
-    cells.forEach((cell) =>
-      cell.removeEventListener("mouseover", highlightCells)
-    );
+    cells.forEach((cell) => cell.removeEventListener("mouseover", highlightCells));
     cells.forEach((cell) => cell.removeEventListener("click", placeShip));
     // place
     player.gameboard.place(rowNum, colNum, shipLength, vertical);
     display.renderBoard(player, computer);
     // call next startPlace
-    startPlace(index + 1);
+    startPlace(index + 1, vertical);
   }
+
+  display.renderPlace(shipName);
 
   // clear all .canClick
   for (let r = 0; r < 10; r++)
     for (let c = 0; c < 10; c++) player.gameboard.grid[r][c].canClick = false;
 
   // set cells as clickable
-  for (let r = 0; r < 10; r++) {
-    for (let c = 0; c < 10; c++) {
+  for (let r = 0; r < 10; r++)
+    for (let c = 0; c < 10; c++)
       if (player.gameboard.canPlace(r, c, shipLength, vertical))
         player.gameboard.grid[r][c].canClick = true;
-    }
-  }
 
-  // event listeners
+  // event listeners: we add event listeners to all cells (even ones that can't be clicked)
+  // in each callback, we check for .canClick and simply return if it can't be clicked
   cells.forEach((cell) => cell.addEventListener("mouseover", highlightCells));
   cells.forEach((cell) => cell.addEventListener("click", placeShip));
 
