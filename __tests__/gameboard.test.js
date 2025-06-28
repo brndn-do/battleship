@@ -26,7 +26,7 @@ describe("gameboard tests", () => {
     }
   });
 
-  describe("place() function tests", () => {
+  describe("place() and canPlace() function tests", () => {
     test("places a ship of length 2 at 0, 0 horizontally", () => {
       // horizontal (row stays same)
       expect(g.canPlace(0, 0, 2)).toBe(true);
