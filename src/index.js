@@ -88,10 +88,6 @@ function startPlace(index, vertical = false) {
   const cells = document.querySelectorAll(".player.cell");
 
   function highlightCells(event) {
-    // clear all highlights
-    for (let r = 0; r < 10; r++)
-      for (let c = 0; c < 10; c++)
-        player.gameboard.grid[r][c].highlighted = false;
     // get cell number, calculate row and col number
     const cellNum = parseInt(event.target.classList[2].slice(4));
     const rowNum = Math.floor(cellNum / 10);
@@ -108,6 +104,14 @@ function startPlace(index, vertical = false) {
         }
       }
     }
+    display.renderBoard(player, computer);
+  }
+
+  function unhighlightCells() {
+    // clear all highlights
+    for (let r = 0; r < 10; r++)
+      for (let c = 0; c < 10; c++)
+        player.gameboard.grid[r][c].highlighted = false;
     display.renderBoard(player, computer);
   }
 
@@ -148,6 +152,7 @@ function startPlace(index, vertical = false) {
   // event listeners: we add event listeners to all cells (even ones that can't be clicked)
   // in each callback, we check for .canClick and simply return if it can't be clicked
   cells.forEach((cell) => cell.addEventListener("mouseover", highlightCells));
+  cells.forEach((cell => cell.addEventListener("mouseleave", unhighlightCells)))
   cells.forEach((cell) => cell.addEventListener("click", placeShip));
 
   // render
@@ -157,7 +162,4 @@ function startPlace(index, vertical = false) {
 // landing page
 display.renderLanding();
 const playButton = document.querySelector("button");
-playButton.addEventListener("click", () => {
-
-  startPlace(0);
-});
+playButton.addEventListener("click", () => startPlace(0));
