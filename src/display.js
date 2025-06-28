@@ -95,12 +95,12 @@ class Display {
             `.${i == 0 ? "player" : "computer"}.cell${r * 10 + c}`
           );
           cell.classList.remove(
-            "hasShip",
+            "showShip",
             "attacked",
             "canClick",
             "highlighted"
           );
-          if (grid[r][c].ship) cell.classList.add("hasShip");
+          if (i === 0 && grid[r][c].ship) cell.classList.add("showShip");
           if (grid[r][c].attacked) cell.classList.add("attacked");
           if (grid[r][c].canClick) cell.classList.add("canClick");
           if (grid[r][c].highlighted) cell.classList.add("highlighted");
